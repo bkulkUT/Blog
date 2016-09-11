@@ -4,13 +4,6 @@
 <%@ page import="com.google.appengine.api.users.User" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
-<%@ page import="com.google.appengine.api.datastore.DatastoreServiceFactory" %>
-<%@ page import="com.google.appengine.api.datastore.DatastoreService" %>
-<%@ page import="com.google.appengine.api.datastore.Query" %>
-<%@ page import="com.google.appengine.api.datastore.Entity" %>
-<%@ page import="com.google.appengine.api.datastore.FetchOptions" %>
-<%@ page import="com.google.appengine.api.datastore.Key" %>
-<%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="blog.BlogPost" %>
 <%@ page import="com.googlecode.objectify.*" %>
@@ -27,7 +20,8 @@
 		<form action="/sign" method="post">
 		
 			<div><textarea name="content" rows="3" cols="60"></textarea></div>
-			<div><input type="submit" value="Submit Post" /></div>
+			<div><input type="submit" value="Post" /></div>
+			<input type="hidden" name="blogName" value="${fn:escapeXml(blogName)}"/>
 			
 		</form>
 	</body>

@@ -4,13 +4,6 @@
 <%@ page import="com.google.appengine.api.users.User" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
-<%@ page import="com.google.appengine.api.datastore.DatastoreServiceFactory" %>
-<%@ page import="com.google.appengine.api.datastore.DatastoreService" %>
-<%@ page import="com.google.appengine.api.datastore.Query" %>
-<%@ page import="com.google.appengine.api.datastore.Entity" %>
-<%@ page import="com.google.appengine.api.datastore.FetchOptions" %>
-<%@ page import="com.google.appengine.api.datastore.Key" %>
-<%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="blog.BlogPost" %>
 <%@ page import="com.googlecode.objectify.*" %>
@@ -34,7 +27,7 @@
     pageContext.setAttribute("blogName", blogName);
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
-
+   
     if (user != null) {
       pageContext.setAttribute("user", user);
 %>
@@ -42,9 +35,6 @@
 	<p>Hello, ${fn:escapeXml(user.nickname)}! (You can
 	<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
 	
-	<form action="/writepost.jsp" method="post">
-		<div><input type="submit" value="Create a New Post" /></div>
-	</form>
 <%
     } 
     
@@ -57,9 +47,7 @@
 
 <%
     }
-%>
 
-<%
 	ObjectifyService.register(BlogPost.class);
 	List<BlogPost> posts = ObjectifyService.ofy().load().type(BlogPost.class).list();   
 	Collections.sort(posts);
@@ -68,6 +56,8 @@
 %>
        
     <p>Blog '${fn:escapeXml(blogName)}' has no posts.</p>
+    <br>
+    
 <%
     } 
     
@@ -75,6 +65,7 @@
 %>
 
         <p>Posts in Blog '${fn:escapeXml(blogName)}'.</p>
+        <br>
 
 <%
         for (BlogPost post : posts) {
@@ -92,10 +83,19 @@
             
 <%
     }
+    
+    if (user != null) {
+%>
+
+    	<form action="/writepost.jsp" method="post">
+			<div><input type="submit" value="Create a New Post" /></div>
+		</form>
+	
+<%
+    }
 %>
 
   </body>
-  
 </html>
 
 
