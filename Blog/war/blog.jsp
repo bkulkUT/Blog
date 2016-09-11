@@ -14,7 +14,6 @@
 <%@ page import="java.util.Collections" %>
 <%@ page import="blog.BlogPost" %>
 <%@ page import="com.googlecode.objectify.*" %>
-
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
@@ -29,7 +28,7 @@
     String blogName = request.getParameter("blogName");
 
     if (blogName == null) {
-        blogName = "default";
+        blogName = "Bharat and Aftab's Blog";
     }
 
     pageContext.setAttribute("blogName", blogName);
@@ -40,30 +39,59 @@
       pageContext.setAttribute("user", user);
 %>
 
-<p>Hello, ${fn:escapeXml(user.nickname)}! (You can
-<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
-
+	<p>Hello, ${fn:escapeXml(user.nickname)}! (You can
+	<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
+	
+	<form action="/writepost.jsp" method="post">
+		<div><input type="submit" value="Create a New Post" /></div>
+	</form>
 <%
     } 
     
     else {
 %>
 
-<p>Hello!
-<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
-to include your name with your posts.</p>
+	<p>Hello!
+	<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
+	to include your name with your posts.</p>
 
 <%
     }
 %>
 
- 
-
 <%
-	// Objectify stuff added here ...
 	ObjectifyService.register(BlogPost.class);
 	List<BlogPost> posts = ObjectifyService.ofy().load().type(BlogPost.class).list();   
 	Collections.sort(posts);
+	
+    if (posts.isEmpty()) {
+%>
+       
+    <p>Blog '${fn:escapeXml(blogName)}' has no posts.</p>
+<%
+    } 
+    
+    else {
+%>
+
+        <p>Posts in Blog '${fn:escapeXml(blogName)}'.</p>
+
+<%
+        for (BlogPost post : posts) {
+            pageContext.setAttribute("post_content", post.getContent());
+            pageContext.setAttribute("post_user", post.getUser());
+%>
+
+            <p><b>${fn:escapeXml(post_user.nickname)}</b> wrote:</p>
+
+<%
+         }
+%>
+
+            <blockquote>${fn:escapeXml(post_content)}</blockquote>
+            
+<%
+    }
 %>
 
   </body>
