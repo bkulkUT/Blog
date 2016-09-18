@@ -19,8 +19,9 @@ public class CreateBlogPost extends HttpServlet {
         UserService userService = UserServiceFactory.getUserService();
         User user = userService.getCurrentUser();
         String content = req.getParameter("content");
+        String title = req.getParameter("contentTitle");
         Date date = new Date();
-        BlogPost post = new BlogPost(user, content);
+        BlogPost post = new BlogPost(user, content, title);
 
         ofy().save().entity(post).now();
  

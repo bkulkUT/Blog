@@ -11,11 +11,49 @@
 
 
 <html>
-   <head>
-   <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
- </head>
+	<head>
+	<style>
+		div.container {
+		    width: 100%;
+		    border: 1px solid gray;
+		}
+		
+		header, footer {
+		    padding: 1em;
+		    color: white;
+		    background-color: black;
+		    clear: left;
+		    text-align: center;
+		}
+		
+		nav {
+		    float: left;
+		    max-width: 160px;
+		    margin: 0;
+		    padding: 1em;
+		}
+		
+		nav ul {
+		    list-style-type: none;
+		    padding: 0;
+		}
+		   
+		nav ul a {
+		    text-decoration: none;
+		}
+		
+		article {
+		    margin-left: 170px;
+		    border-left: 1px solid gray;
+		    padding: 1em;
+		    overflow: hidden;
+		}
+	</style>
+	<link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+	</head>
  
-  <body>
+ <body>
+ <div class="container">
 
 <%
     String blogName = request.getParameter("blogName");
@@ -47,16 +85,29 @@
 
 <%
     }
+%>
 
+	<header>
+	   <h1>Random Thoughts</h1>
+	</header>
+	  
+	<nav>
+	  <ul>
+	    <li><a href="test.jsp">View all posts</a></li>
+	  </ul>
+	</nav>
+	
+<%
 	ObjectifyService.register(BlogPost.class);
 	List<BlogPost> posts = ObjectifyService.ofy().load().type(BlogPost.class).list();   
 	Collections.sort(posts);
+	Collections.reverse(posts);
 	
     if (posts.isEmpty()) {
 %>
        
     <p>Blog '${fn:escapeXml(blogName)}' has no posts.</p>
-    <br>
+	<br> 
     
 <%
     } 
@@ -64,22 +115,32 @@
     else {
 %>
 
-        <p>Posts in Blog '${fn:escapeXml(blogName)}'.</p>
-        <br>
-
+       
+		<article>
 <%
-        for (BlogPost post : posts) {
-            pageContext.setAttribute("post_content", post.getContent());
-            pageContext.setAttribute("post_user", post.getUser());
+    int counter = 0;    
+	for (BlogPost post : posts) {
+		pageContext.setAttribute("post_content", post.getContent());
+		pageContext.setAttribute("post_user", post.getUser());
+		pageContext.setAttribute("current_date", post.getDate());
+		pageContext.setAttribute("post_title", post.getTitle());
+            
+            
 %>
 
-            <p><b>${fn:escapeXml(post_user.nickname)}</b> wrote:</p>
-
-<%
-         }
-%>
-
+            <p><b>${fn:escapeXml(post_user.nickname)} says:<h2>${fn:escapeXml(post_title)}</h2></b></p>
+            <br>
             <blockquote>${fn:escapeXml(post_content)}</blockquote>
+            <br>
+            ${fn:escapeXml(current_date)}<hr><br>
+
+<%
+    	counter++;
+		if (counter == 5) break;
+	}
+%>
+
+		</article>
             
 <%
     }
@@ -94,7 +155,10 @@
 <%
     }
 %>
-
+		
+	<footer> Created by Bharat and Aftab </footer>
+	</div>
+	
   </body>
 </html>
 

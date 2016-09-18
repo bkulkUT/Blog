@@ -13,13 +13,15 @@ public class BlogPost implements Comparable<BlogPost> {
     @Id Long id;
     User user;
     String content;
+    String title;
     Date date;
 
     private BlogPost() {}
 
-    public BlogPost(User user, String content) {
+    public BlogPost(User user, String content, String title) {
         this.user = user;
         this.content = content;
+        this.title = title;
         date = new Date();
     }
 
@@ -29,6 +31,14 @@ public class BlogPost implements Comparable<BlogPost> {
 
     public String getContent() {
         return content;
+    }
+    
+    public Date getDate() {
+    	return date;
+    }
+    
+    public String getTitle() {
+    	return title;
     }
 
     @Override
