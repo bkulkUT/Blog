@@ -29,6 +29,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	    <url-pattern>/sign</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>CronServlet</servlet-name>
+		<servlet-class>blog.CronServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>CronServlet</servlet-name>
+		<url-pattern>/cron</url-pattern>
+	</servlet-mapping>
+	
 	<filter>
 	    <filter-name>ObjectifyFilter</filter-name>
 	    <filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>

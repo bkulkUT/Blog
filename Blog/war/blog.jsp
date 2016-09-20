@@ -94,8 +94,11 @@
 	<nav>
 	  <ul>
 	    <li><a href="test.jsp">View all posts</a></li>
+	    <li><a href="test.jsp">Subscribe</a></li>
+	    <li><a href="test.jsp">Unsubscribe</a></li>
 	  </ul>
 	</nav>
+	
 	
 <%
 	ObjectifyService.register(BlogPost.class);
