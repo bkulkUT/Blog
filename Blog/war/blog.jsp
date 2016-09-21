@@ -94,11 +94,8 @@
 	<nav>
 	  <ul>
 	    <li><a href="test.jsp">View all posts</a></li>
-	    <li><a href="test.jsp">Subscribe</a></li>
-	    <li><a href="test.jsp">Unsubscribe</a></li>
 	  </ul>
 	</nav>
-	
 	
 <%
 	ObjectifyService.register(BlogPost.class);
@@ -154,6 +151,11 @@
     	<form action="/writepost.jsp" method="post">
 			<div><input type="submit" value="Create a New Post" /></div>
 		</form>
+		
+    	<form action="/subscribe.jsp" method="post">
+			<div><input type="submit" value="Subscribe" /></div>
+		</form>
+		
 	
 <%
     }

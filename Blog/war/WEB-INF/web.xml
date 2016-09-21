@@ -30,6 +30,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet-mapping>
 	
 	<servlet>
+	    <servlet-name>subscribe</servlet-name>
+	    <servlet-class>blog.CreateSubscription</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+	    <servlet-name>subscribe</servlet-name>
+	    <url-pattern>/subscribe</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>CronServlet</servlet-name>
 		<servlet-class>blog.CronServlet</servlet-class>
 	</servlet>
