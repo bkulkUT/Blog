@@ -15,16 +15,19 @@ import javax.servlet.http.HttpServletResponse;
 public class CreateBlogPost extends HttpServlet {
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
-        UserService userService = UserServiceFactory.getUserService();
-        User user = userService.getCurrentUser();
-        String content = req.getParameter("content");
-        String title = req.getParameter("contentTitle");
-        Date date = new Date();
-        BlogPost post = new BlogPost(user, content, title);
-
-        ofy().save().entity(post).now();
- 
+		
+		String type = req.getParameter("submitPost");
+		
+		if (type != null) {
+			UserService userService = UserServiceFactory.getUserService();
+	        User user = userService.getCurrentUser();
+	        String content = req.getParameter("content");
+	        String title = req.getParameter("contentTitle");
+//	        Date date = new Date();
+	        BlogPost post = new BlogPost(user, content, title);
+	        ofy().save().entity(post).now();
+		}
+        
         resp.sendRedirect("/blog.jsp");
     }
 }

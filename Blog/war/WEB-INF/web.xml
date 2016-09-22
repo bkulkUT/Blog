@@ -40,6 +40,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet-mapping>
 	
 	<servlet>
+	    <servlet-name>unsubscribe</servlet-name>
+	    <servlet-class>blog.RemoveSubscription</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+	    <servlet-name>unsubscribe</servlet-name>
+	    <url-pattern>/unsubscribe</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>CronServlet</servlet-name>
 		<servlet-class>blog.CronServlet</servlet-class>
 	</servlet>

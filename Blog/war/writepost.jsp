@@ -20,7 +20,9 @@
 		<form action="/sign" method="post">
 			<div><textarea name="contentTitle" rows="1" cols="60"></textarea></div><br>
 			<div><textarea name="content" rows="20" cols="60"></textarea></div>
-			<div><input type="submit" value="Post" /></div>
+			<div><input type="submit" name="submitPost" value="Post" />
+			<input type="reset" value="Clear Post" />
+			<input type="submit" name="cancel" value="Cancel Post"></div>
 			<input type="hidden" name="blogName" value="${fn:escapeXml(blogName)}"/>
 
 		</form>

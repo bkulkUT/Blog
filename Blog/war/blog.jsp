@@ -6,6 +6,7 @@
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="blog.BlogPost" %>
+<%@ page import="blog.Subscriptions" %>
 <%@ page import="com.googlecode.objectify.*" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
@@ -98,6 +99,7 @@
 	</nav>
 	
 <%
+	ObjectifyService.register(Subscriptions.class);
 	ObjectifyService.register(BlogPost.class);
 	List<BlogPost> posts = ObjectifyService.ofy().load().type(BlogPost.class).list();   
 	Collections.sort(posts);
@@ -151,14 +153,52 @@
     	<form action="/writepost.jsp" method="post">
 			<div><input type="submit" value="Create a New Post" /></div>
 		</form>
+<%
+	List<Subscriptions> allSubscribers = ObjectifyService.ofy().load().type(Subscriptions.class).list();
+	System.out.println("Current user is " + user.getNickname());	
+	System.out.println("List size is " + allSubscribers.size());
+	
+	boolean flag = false;
+	for (Subscriptions thisSubscriber : allSubscribers) {
 		
-    	<form action="/subscribe.jsp" method="post">
+		System.out.println("thisSubscriber is " + thisSubscriber.getUser().getNickname());
+		
+		if (thisSubscriber.getUser().getEmail().compareTo(user.getEmail()) == 0) {
+			
+			System.out.println(thisSubscriber);
+			System.out.println("User is already subscribed!");		
+		flag = true;		
+		break;
+		}
+	}
+	
+	
+	if (flag == false) {
+%>
+		<form action="/subscribe" method="post">
 			<div><input type="submit" value="Subscribe" /></div>
 		</form>
 		
+<%
+	}
 	
+	if (flag == true) {
+%>		
+
+		<form action="/unsubscribe" method="post">
+			<div><input type="submit" value="Unsubscribe" /></div>
+		</form>
+<%
+			System.out.println("New user!");
+	}
+%>
+		<form action="/cron" method="post">
+			<div><input type="submit" value="Test Cron" /></div>
+		</form>
+		
 <%
     }
+  
 %>
 		
 	<footer> Created by Bharat and Aftab </footer>
