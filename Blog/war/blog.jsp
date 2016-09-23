@@ -97,7 +97,9 @@
 
 	<header>
 	   <h1>Random Thoughts</h1>
+	   <img src="banner.jpg" alt="Banner" style="width:940px;height:198px;">
 	</header>
+	
 <%
 	if (view == 0) {
 %>
