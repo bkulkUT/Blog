@@ -36,8 +36,7 @@ public class RemoveSubscription extends HttpServlet {
 			System.out.println("Error : User not found in database!");
 		}
 		
-//		Ref<Subscriptions> removed = ofy().load().type(Subscriptions.class).filter("index", user.getNickname()).first();
-//		System.out.println("Contents of removed " + removed);
+		 resp.sendRedirect("/unsubscribe.jsp");
         
 	}
 }

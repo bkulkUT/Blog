@@ -57,7 +57,14 @@
  <div class="container">
 
 <%
-    String blogName = request.getParameter("blogName");
+	int view = 0;
+	String viewAll = request.getParameter("viewAll");
+	
+	if (viewAll != null) {
+		view = Integer.parseInt(viewAll);
+	}
+	
+	String blogName = request.getParameter("blogName");
 
     if (blogName == null) {
         blogName = "Bharat and Aftab's Blog";
@@ -91,14 +98,28 @@
 	<header>
 	   <h1>Random Thoughts</h1>
 	</header>
-	  
+<%
+	if (view == 0) {
+%>
 	<nav>
 	  <ul>
-	    <li><a href="test.jsp">View all posts</a></li>
+	    <li><a href="blog.jsp?viewAll=1">View all posts</a></li>
 	  </ul>
 	</nav>
 	
 <%
+	}
+
+	else {
+%>
+	<nav>
+	  <ul>
+	    <li><a href="blog.jsp">View recent 5 posts</a></li>
+	  </ul>
+	</nav>
+	
+<%
+	}
 	ObjectifyService.register(Subscriptions.class);
 	ObjectifyService.register(BlogPost.class);
 	List<BlogPost> posts = ObjectifyService.ofy().load().type(BlogPost.class).list();   
@@ -120,25 +141,22 @@
        
 		<article>
 <%
-    int counter = 0;    
+	int counter = 0;    
 	for (BlogPost post : posts) {
 		pageContext.setAttribute("post_content", post.getContent());
 		pageContext.setAttribute("post_user", post.getUser());
 		pageContext.setAttribute("current_date", post.getDate());
-		pageContext.setAttribute("post_title", post.getTitle());
-            
-            
+		pageContext.setAttribute("post_title", post.getTitle());        
 %>
 
-            <p><b>${fn:escapeXml(post_user.nickname)} says:<h2>${fn:escapeXml(post_title)}</h2></b></p>
+            <p>${fn:escapeXml(current_date)}<br><b>${fn:escapeXml(post_user.nickname)}</b> says:<h3><b>${fn:escapeXml(post_title)}</h3></b></p>
+            <pre><blockquote>${fn:escapeXml(post_content)}</blockquote></pre>
             <br>
-            <blockquote>${fn:escapeXml(post_content)}</blockquote>
-            <br>
-            ${fn:escapeXml(current_date)}<hr><br>
+            <hr><br>
 
 <%
     	counter++;
-		if (counter == 5) break;
+		if (counter == 5 && view == 0) break;
 	}
 %>
 
@@ -165,8 +183,8 @@
 		
 		if (thisSubscriber.getUser().getEmail().compareTo(user.getEmail()) == 0) {
 			
-			System.out.println(thisSubscriber);
-			System.out.println("User is already subscribed!");		
+			//System.out.println(thisSubscriber);
+			//System.out.println("User is already subscribed!");		
 		flag = true;		
 		break;
 		}
@@ -191,19 +209,13 @@
 <%
 			System.out.println("New user!");
 	}
-%>
-		<form action="/cron" method="post">
-			<div><input type="submit" value="Test Cron" /></div>
-		</form>
-		
-<%
+
     }
   
 %>
 		
 	<footer> Created by Bharat and Aftab </footer>
 	</div>
-	
   </body>
 </html>
 

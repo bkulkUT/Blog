@@ -13,7 +13,8 @@
 <html>
 
  	<head>
-  		<meta charset="utf-8"> 
+  		<meta charset="utf-8">
+  		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css" /> 
   		<title>A form</title>
  	</head>
 	
@@ -22,6 +23,7 @@
  		<p>
  		You will receive an email at 5:00 PM with a daily blog update. </br>
  		</p>
+ 		<a href="blog.jsp">Okay, take me back to the blog!</a>
 	</body>
 	
 </html>

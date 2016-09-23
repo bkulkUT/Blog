@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cronentries>
 <cron>
-<url>/cron</url>
-<description>Thanks for subscribing to our website!</description>
+<url>/CronServlet</url>
+<description>Running cron job</description>
 <schedule>every day 17:00</schedule>
 </cron>
 </cronentries>
+

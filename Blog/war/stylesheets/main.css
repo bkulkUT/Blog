@@ -2,3 +2,11 @@
 	    background-color: powderblue;
 	}
 	
+  	pre {
+    	font-family: Verdana;
+    }
+    
+    input {
+    	text-align: center;
+    }
+    

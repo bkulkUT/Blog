@@ -56,7 +56,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	
 	<servlet-mapping>
 		<servlet-name>CronServlet</servlet-name>
-		<url-pattern>/cron</url-pattern>
+		<url-pattern>/CronServlet</url-pattern>
 	</servlet-mapping>
 	
 	<filter>
